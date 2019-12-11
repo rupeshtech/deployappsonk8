@@ -1,0 +1,32 @@
+Import-Module Az.Resources
+$password= "xxxxxxxxxxxx"
+$credentials = New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{ StartDate=Get-Date; EndDate=Get-Date -Year 2024; Password=$password}
+$sp = New-AzAdServicePrincipal -DisplayName "goazuremeetup" -PasswordCredential $credentials 
+
+New-AzRoleAssignment -RoleDefinitionName "Contributor" -ApplicationId $sp.ApplicationId
+
+az group create -l westeurope -n goazure
+
+az aks create -g "goazure" --name "goazure" --service-principal $sp.ApplicationId --client-secret $password
+
+az login --service-principal --username $sp.ApplicationId --password $password --tenant xxxxxxx
+
+az aks get-credentials --resource-group goazure --name goazure
+az aks browse --name goazure -g goazure
+kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+az acr create -n goazuremeetuppp -g goazure --sku Standard -l westeurope
+az acr login --name goazuremeetuppp
+docker tag demoapplinux goazuremeetuppp.azurecr.io/demoapp:v1
+docker push goazuremeetuppp.azurecr.io/demoapp:v1
+
+kubectl create  secret docker-registry meetupdemosecret --docker-username=goazuremeetuppp --docker-password=xxxxxxx --docker-server=goazure.azurecr.io --docker-email=rkumar@snelstart.nl
+kubectl create namespace ingress-basic
+helm install stable/nginx-ingress --namespace ingress-basic --set controller.replicaCount=1 --set controller.image.repository=quay.io/kubernetes-ingress-controller/nginx-ingress-controller --generate-name
+#--set controller.service.loadBalancerIP=$publicIp.IpAddress
+
+
+$publicIpName="goazure"
+$rgName="goazure"
+$dnsPrefix="goazuredemoone"
+$publicIp = New-AzPublicIpAddress -Name $publicIpName -ResourceGroupName "MC_goazure_goazure_westeurope" -AllocationMethod Static -DomainNameLabel $dnsPrefix -Location westeurope
+$publicIp
