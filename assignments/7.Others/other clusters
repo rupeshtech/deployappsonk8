@@ -1,0 +1,13 @@
+az login --service-principal --username 2853199f-ffbf-4788-9cd1-dd27813ac070 --password "goazuremeetup@123" --tenant "38b8a89b-2c9e-43a8-8c8b-36ffec3b8be1"
+az aks get-credentials --resource-group goazure --name goazure
+kubectl get namespaces
+
+
+acr: goazuremeetupp
+------------------------------------------------------------------------------------------------------------------------
+
+az login --service-principal --username 29b4f438-6d99-4650-8638-933b4b159da3 --password "goazuremeetup@123" --tenant "d482f188-acf8-4b4d-bb04-45760c92d06e"
+az aks get-credentials --resource-group goazure --name goazure
+kubectl get namespaces
+
+acr: goazuremeetuppp
