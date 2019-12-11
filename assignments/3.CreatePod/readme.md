@@ -50,7 +50,7 @@ kubectl port-forward pod/myapp-pod 3001:80
 
 open browser and browse the application localhost:3001
 
-go to kubernetes dashboard or open browser and browse 127.0.o.1:8001
+go to kubernetes dashboard or open browser and browse 127.0.0.1:8001
 
 ### 3.9 CleanUp
 
