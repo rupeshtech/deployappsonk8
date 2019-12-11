@@ -1,0 +1,39 @@
+﻿@model DemoAppLinux.Attendee
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h4>Welcome to this meetup.</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (string.IsNullOrEmpty(Model.Name))
+            {
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Please Enter your name here" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            }
+            else
+            {
+
+                //Html.DisplayNameFor(m => m.Name);
+                <h1> Welcome @Html.DisplayFor(m => m.Name)</h1>
+
+            }
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

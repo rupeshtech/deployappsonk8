@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp-container
+    image: nginx
+    ports:
+      - containerPort: 80
+#    image: goazuremeetup.azurecr.io/<yourname>:v1
+#  imagePullSecrets: 
+#        - name: meetupdemosecret

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  selector:
+    matchLabels:
+     appName: demo-app
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        appName: demo-app
+    spec:
+      containers:
+      - name: myapp-container
+        image: goazuremeetup.azurecr.io/<yourname>:v1
+        ports:
+        - containerPort: 80
+      imagePullSecrets: 
+        - name: meetupdemosecret
